@@ -18,7 +18,8 @@ module.exports = {
 
         // './index.js',
         // the entry point of our app
-        './first.js'
+        './first.js',
+        './study/clock.js',
     ],
     output: {
         filename: 'bundle.js',
