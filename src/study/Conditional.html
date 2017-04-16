@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        //c
+        function F(props) {
+            return <h1>Hello,this is function,{props.name}</h1>;
+        }
+        function F1(props) {
+            return <h1>Hello admin!</h1>;
+        }
+        function F2(props) {
+            return <h1>Hello guest!</h1>
+        }
+        function Greeting(props) {
+            const isLoggedIn = props.isLoggedIn;
+            if (isLoggedIn) {
+                return <F3 />
+            }
+            return <F3 />;
+        }
+        class F3 extends React.Component {
+            render() {
+                return <h1>hello this is F3</h1>
+            }
+        }
+        function LoginButton(props) {
+            return <button onClick={props.onClick}>
+                LoginIn
+            </button>
+        }
+        function LogoutButton(props) {
+            return <button onClick={props.onClick}>
+                LoginOut
+            </button>;
+        }
+        class Test extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleLogin = this.handleLogin.bind(this);
+                this.handleLogout = this.handleLogout.bind(this);
+                this.state = {isLoggedIn: true};
+            }
+
+            handleLogin() {
+                this.setState({
+                    isLoggedIn: true
+                })
+            }
+
+            handleLogout() {
+                this.setState({
+                    isLoggedIn: false
+                })
+            }
+
+            componentDidMount() {
+
+            }
+
+            componentWillUnmount() {
+
+            }
+
+            render() {
+//                render中state是异步的,因此只获取一次,是好习惯.
+                const isLoggedIn = this.state.isLoggedIn;
+                let button = null;
+                if (this.state.isLoggedIn) {
+                    button = (
+                            <LoginButton onClick={this.handleLogout}>
+                                Logout
+                            </LoginButton>
+                    )
+                } else {
+                    button = (
+                            <LogoutButton onClick={this.handleLogin}>
+                                LoginIn
+                            </LogoutButton>
+                    )
+                }
+                return (
+                        <div>
+                            <Greeting isLoggedIn={this.state.isLoggedIn}/>
+                            {button}
+                        </div>
+                );
+            }
+
+        }
+
+        const e = <Test />;
+        ReactDOM.render(e, document.getElementById("root"));
+
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

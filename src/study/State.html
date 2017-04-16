@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>State</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        function F(props) {
+            return <h1>Hello,this is function,{props.name}</h1>;
+        }
+        class State extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {counter: 0};
+                this.handle = this.handle.bind(this);
+
+            }
+
+//            handle(){
+//                this.setState({
+//                    counter: this.state.counter + this.props.increment,
+//                });
+//            }
+//            handle(){
+//                this.setState(
+//                    function(pre,ps){//prevState,props
+//                        console.log(pre)
+//                        console.log(ps)
+//                        return {counter:pre.counter+ps.increment}
+//                    }
+//                )
+//            }
+            handle() {
+                this.setState(
+                    //如果要返回一个对象，就要注意，如果是单表达式，这么写的话会报错：因为和函数体的{ ... }有语法冲突，所以要改为：({... })
+                    (prevState, props) => ({
+                        counter: prevState.counter + props.increment
+                    })
+                )
+            }
+
+            render() {
+                return (
+                        <div>
+                            <h2 onClick={this.handle}>Counter:{this.state.counter}</h2>
+                        </div>
+                );
+            }
+
+        }
+
+        const e = <State increment={3}/>;
+        ReactDOM.render(e, document.getElementById("root"));
+
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>
