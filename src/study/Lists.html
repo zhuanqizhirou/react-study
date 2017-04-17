@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lists</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        const numbers = [1, 2, 3, 4, 5]
+        const doubled = numbers.map((n) => <li>{n * 2}</li>)
+
+        function NumberList(props) {
+            const numbers = props.numbers;
+            const doubled = numbers.map((n) => <li key={n.toString()}>{n * 3}</li>)
+            return (<ul>{doubled}</ul>);
+        }
+        ReactDOM.render(<ul>{doubled}</ul>, document.getElementById("root"));
+
+        setTimeout(() =>
+                ReactDOM.render(<h1>Hello</h1>, document.getElementById("root"))
+            , 500)
+        setTimeout(() =>
+                ReactDOM.render(
+                        <NumberList numbers={numbers}/>,
+                    document.getElementById("root"))
+            , 1000);
+
+
+        function Blog(props) {
+            const sidebar = (
+                    <ul>
+                        {props.posts.map((post) =>
+                                <li key={post.id}>
+                                    {post.title}
+                                </li>
+                        )}
+                    </ul>
+            );
+            const content = props.posts.map((post) =>
+                    <div key={post.id}>
+                        <h3>{post.title}</h3>
+                        <p>{post.content}</p>
+                    </div>
+            );
+            return (
+                    <div>
+                        {sidebar}
+                        <hr />
+                        {content}
+                    </div>
+            );
+        }
+
+        const posts = [
+            {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+            {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+        ];
+        setTimeout(() =>
+                ReactDOM.render(
+                        <Blog posts={posts}/>,
+                    document.getElementById('root')
+                )
+            , 2000);
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

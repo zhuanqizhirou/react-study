@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Children</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        function F(props) {
+            return <h1>Hello,this is function,{props.name}</h1>;
+        }
+        class Children extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {date: new Date()};
+            }
+
+            componentDidMount() {
+                this.timerID = setInterval(
+                    () => this.tick(),
+                    1000
+                );
+            }
+
+            componentWillUnmount() {
+                clearInterval(this.timerID);
+            }
+
+            tick() {
+                this.setState({
+                    date: new Date()
+                });
+            }
+
+            render() {
+                return (
+                        <div>
+                            <h1>Hello, world!</h1>
+                            <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+                        </div>
+                );
+            }
+
+        }
+
+        const e = <Children />;
+        ReactDOM.render(e, document.getElementById("root"));
+
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

@@ -7,28 +7,28 @@
     <script src="../../react-dom.min.js"></script>
     <script src="../../browser.min.js"></script>
     <script type="text/babel">
-        function Wel(props){
+        function Wel(props) {
             return <h1>Hello,this is function,{props.name}</h1>;
         }
-        class Welcome extends React.Component{
-            render(){
+        class Welcome extends React.Component {
+            render() {
                 return <h1>Hello,{this.props.name}</h1>;
             }
         }
         function App() {
             return (
-                <div>
-                    <Wel name="chrome"/>
-                    <Wel name="ie"/>
-                    <Wel name="firefox" />
-                </div>
+                    <div>
+                        <Wel name="chrome"/>
+                        <Wel name="ie"/>
+                        <Wel name="firefox"/>
+                    </div>
             );
         }
-        const e  = <Wel name="RB" />;
-        ReactDOM.render(e,document.getElementById("root"));
+        const e = <Wel name="RB"/>;
+        ReactDOM.render(e, document.getElementById("root"));
         const e2 = <Welcome name="Welcome"/>;
-        ReactDOM.render(e2,document.getElementById("root"));
-        ReactDOM.render(<App />,document.getElementById("root"));
+        ReactDOM.render(e2, document.getElementById("root"));
+        ReactDOM.render(<App />, document.getElementById("root"));
     </script>
 </head>
 <body>
