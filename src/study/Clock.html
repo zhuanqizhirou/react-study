@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        //      进阶：基本
+        function tick() {
+            const e = (
+                    <div>
+                        <h1>It is {new Date().toLocaleTimeString()}</h1>
+                    </div>
+            )
+            ReactDOM.render(e, document.getElementById("root"));
+        }
+        //setInterval(tick, 1000);
+        //========================================================================
+        //        进阶-Clock component
+        function Clock(props) {
+            return (
+                    <div>
+                        <h1>Clock: It is {props.date.toLocaleTimeString()}</h1>
+                    </div>
+            )
+        }
+        function tick() {
+            ReactDOM.render(
+                    <Clock date={new Date()}/>,
+                document.getElementById('root')
+            )
+        }
+        //setInterval(tick, 1000)
+        //========================================================================
+        //        进阶：write once and have the Clock update itself
+
+        class CClock extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {date: new Date()};
+            }
+
+            render() {
+                return (
+                        <div>
+                            // props.date->this.props.date->this.state.date
+                            <h1>CClock: It is {this.state.date.toLocaleTimeString()}</h1>
+                        </div>
+                )
+            }
+
+        }
+        ReactDOM.render(
+                <CClock />,
+            document.getElementById('root')
+        )
+
+        //========================================================================
+        //        进阶：lifecycle
+
+        class CCClock extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {date: new Date()};
+            }
+
+//            If you don't use something in render(), it shouldn't be in the state.
+
+            render() {
+                return (
+                        <div>
+                            <h1>CCClock: It is {this.state.date.toLocaleTimeString()}</h1>
+                        </div>
+                )
+            }
+
+            componentDidMount() {
+                this.timerId = setInterval(
+                    () => this.tick(),
+                    1000
+                )
+            }
+
+            componentWillUnmount() {
+                clearInterval(this.timerID);
+            }
+
+            tick() {
+                this.setState({
+                    date: new Date()
+                })
+            }
+        }
+        ReactDOM.render(
+                <CCClock />,
+            document.getElementById('root')
+        )
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

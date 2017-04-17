@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        function MyClock(props) {
+            return <h2>MyClock :{props.date.toLocaleTimeString()}</h2>
+        }
+        class ClockFlowDown extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {date: new Date()};
+            }
+
+//            If you don't use something in render(), it shouldn't be in the state.
+
+            render() {
+                return (
+                        <div>
+                            <MyClock date={this.state.date}/>
+                        </div>
+                )
+            }
+
+            componentDidMount() {
+                this.timerId = setInterval(
+                    () => this.tick(),
+                    1000
+                )
+            }
+
+            componentWillUnmount() {
+                clearInterval(this.timerID);
+            }
+
+            tick() {
+                this.setState({
+                    date: new Date()
+                })
+            }
+        }
+        ReactDOM.render(
+                <ClockFlowDown time="" />,
+            document.getElementById('root')
+        )
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        class Event extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {isToggleOn:true};
+                console.log(this.handler)
+//                this.handler = this.handler.bind(this);
+                console.log(this.handler)
+            }
+
+//            If you don't use something in render(), it shouldn't be in the state.
+
+            render() {
+                return (
+                        <div>
+                            <button onClick={this.handler}>
+                                {this.state.isToggleOn?"On":"Off"}
+                            </button>
+                        </div>
+                )
+            }
+
+            componentDidMount() {
+
+            }
+
+            componentWillUnmount() {
+
+            }
+
+            handler() {
+                this.setState(prev =>({
+                    isToggleOn:!prev.isToggleOn
+                }))
+            }
+        }
+        ReactDOM.render(
+                <Event />,
+            document.getElementById('root')
+        )
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>
