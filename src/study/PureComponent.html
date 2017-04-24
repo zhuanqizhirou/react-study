@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CounterButton</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        class CounterButton extends React.PureComponent {
+            constructor(props) {
+                super(props);
+                this.state = {count: 1};
+            }
+
+//        this.setState({count: this.state.count + 1});  //多次执行,只加1
+//        this.setState(state => ({count: state.count + 1}));//执行几次,加几次
+            render() {
+                return (
+                        <div>
+                            <button
+                                    color={this.props.color}
+                                    onClick={
+                                        () => {
+                                            this.setState(state => ({count: state.count + 1}))
+                                            this.setState(state => ({count: state.count + 1}))
+                                            this.setState(state => ({count: state.count + 1}))
+                                            this.setState(state => ({count: state.count + 1}))
+                                            this.setState(state => ({count: state.count + 1}))
+                                        }
+                                    }>
+                                Count: {this.state.count}
+                            </button>
+                            <button
+                                    color={this.props.color}
+                                    onClick={
+                                        () => {
+                                            this.setState({count: this.state.count + 1});
+                                            this.setState({count: this.state.count + 1});
+                                            this.setState({count: this.state.count + 1});
+                                            this.setState({count: this.state.count + 1});
+                                            this.setState({count: this.state.count + 1});
+                                        }
+                                    }>
+                                Count: {this.state.count }
+                            </button>
+                        </div>
+                );
+            }
+        }
+
+        const e =
+                <CounterButton />
+        ;
+        ReactDOM.render(e, document.getElementById("root"));
+
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

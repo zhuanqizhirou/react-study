@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WordAdder</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        //如果是PureComponent,会执行 shouldComponentUpdate, shallow comparison,反而不会render.而Component,会render
+        class ListOfWords extends React.PureComponent {
+            render() {
+                return <div>{this.props.words.join(',')}</div>;
+            }
+        }
+
+        class WordAdder extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    words: ['marklar']
+                };
+                this.handleClick = this.handleClick.bind(this);
+            }
+
+            handleClick() {
+                // This section is bad style and causes a bug
+                const words = this.state.words;
+                words.push('marklar');
+                this.setState({words: words});
+            }
+//            shouldComponentUpdate(nextProps,nextState){
+//                console.log("Shallow Comparison 只是浅层比较,如果这里不返回true,不会变化.")
+//                return true;
+//            }
+            render() {
+                return (
+                        <div>
+                            <input type="button" onClick={this.handleClick} value="Button"/>
+                            <ListOfWords words={this.state.words}/>
+                        </div>
+                );
+            }
+        }
+
+        const e = <WordAdder />;
+        ReactDOM.render(e, document.getElementById("root"));
+
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>
