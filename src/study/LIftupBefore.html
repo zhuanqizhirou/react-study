@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        function Liftup(props) {
+            if (props.num > 100) {
+                return <h2>>100</h2>;
+            } else {
+                return <h2>smaller than 100</h2>;
+            }
+        }
+
+        const system = {
+            decimal: "十进制",
+            hexadecimal: "十六进制"
+        }
+
+        function toHexadecimal(n) {
+            return n.toString(16)
+        }
+        function toDecimal(n) {
+            return n.toString(10)
+        }
+        class NumInput extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleInput = this.handleInput.bind(this);
+                this.state = {num: ""};
+            }
+
+            handleInput(event) {
+                this.setState({
+                        num: event.target.value
+                    }
+                )
+            }
+
+
+            render() {
+                //onSubmit not onsubmit
+                //onChange not onchange
+                const num = this.state.num;
+                const sys = this.props.system;
+                return (
+                        <fieldset>
+                            <legend>
+                                输入{system[sys]}数字：
+                            </legend>
+                            <input type="text" value={num} onChange={this.handleInput}/>
+                            <Liftup num={num}/>
+                        </fieldset>
+                );
+            }
+
+        }
+        class Calculator extends React.Component {
+            render() {
+                return (
+                        <div><NumInput system="decimal"/>
+                            <NumInput system="hexadecimal"/></div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+                <Calculator/>
+            ,
+            document.getElementById('root')
+        )
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

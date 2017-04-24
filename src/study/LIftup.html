@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        function Liftup(props) {
+            if (props.num > 100) {
+                return <h2>>100</h2>;
+            } else {
+                return <h2>smaller than 100</h2>;
+            }
+        }
+
+        const system = {
+            decimal: "十进制",
+            hexadecimal: "十六进制"
+        }
+
+        function toHexadecimal(n) {
+            n = Number(n)
+//            return n.toString(16)
+            console.log(n + " toHexadecimal is: " + n.toString(16))
+            return n.toString(16);
+//            console.log(n+" toHexadecimal is: "+parseInt(n,16))
+//            return parseInt(n,16);
+        }
+
+        function toDecimal(n) {
+//            return n.toString(10)
+            console.log(n + " toDecimal is: " + parseInt(n, 16));
+            return parseInt(n, 16)
+        }
+        function tryConvert(num, convert) {
+            const output = convert(num);
+            return output.toString();
+        }
+        class NumInput extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleInput = this.handleInput.bind(this);
+//                this.state = {num: ""};
+            }
+
+            handleInput(event) {
+//                this.setState({
+//                        num: event.target.value
+//                    }
+//                )
+                this.props.onNumChange(event.target.value);
+            }
+
+
+            render() {
+                //onSubmit not onsubmit
+                //onChange not onchange
+//                const num = this.props.num;
+                const num = this.props.num;
+                const sys = this.props.system;
+                return (
+                        <fieldset>
+                            <legend>
+                                输入{system[sys]}数字：
+                            </legend>
+                            <input type="text" value={num} onChange={this.handleInput}/>
+
+                        </fieldset>
+                );
+            }
+
+        }
+        class Calculator extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleDecimalChange = this.handleDecimalChange.bind(this);
+                this.handleHexadecimalChange = this.handleHexadecimalChange.bind(this);
+                this.state = {
+                    num: "",
+                    system: "decimal"
+                }
+            }
+
+            handleDecimalChange(num) {
+                this.setState({
+                    system: "decimal",
+                    num: num
+                });
+            }
+
+            handleHexadecimalChange(num) {
+                this.setState({
+                    system: "hexadecimal",
+                    num: num
+                })
+            }
+
+            render() {
+                const num = this.state.num;
+                const system = this.state.system;
+                console.log("system:" + system + ",num:" + num);
+                const d = system === "hexadecimal" ? tryConvert(num, toDecimal) : num;//not toDecimal()
+                const h = system === "decimal" ? tryConvert(num, toHexadecimal) : num;//not toHexadecimal()
+                console.log(d)
+                //事件绑定用{},而不是“”
+                //事件不要忘记this.
+                return (
+                        <div><NumInput num={d} system="decimal" onNumChange={this.handleDecimalChange}/>
+                            <NumInput num={h} system="hexadecimal" onNumChange={this.handleHexadecimalChange}/>
+                            <Liftup num={d}/>
+                        </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+                <Calculator/>
+            ,
+            document.getElementById('root')
+        )
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>
