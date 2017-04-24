@@ -7,7 +7,36 @@ list 中每个element应该指定key
 onSubmit,测试的情况下一定留意是否需要event.preventDefault(),否则看不到log内容.
 console.log(this.state),不能拉掉this.
 
+1.The same:
+function App1() {
+  return <Greeting firstName="Ben" lastName="Hector" />;
+}
 
+function App2() {
+  const props = {firstName: 'Ben', lastName: 'Hector'};
+  return <Greeting {...props} />;
+}
+2.A React component can't return multiple React elements,
+3.false, null, undefined, and true are valid children. They simply don't render.
+Conversely, if you want a value like false, true, null, or undefined to appear in the output, you have to convert it
+to a string first:
+4.
+//        this.setState({count: this.state.count + 1});  //多次执行,只加1
+//        this.setState(state => ({count: state.count + 1}));//执行几次,加几次
 
+5.//如果是PureComponent,会执行 shouldComponentUpdate, shallow comparison,反而不会render.而Component,会render
+6.mutate objects:
+          //以下效果相同.
+          //        words:prevState.words.concat(["marklar"])
+          //        words:[...prevState.words,"marklar"]
 
+7.
+function updateColorMap(colormap) {
+  return Object.assign({}, colormap, {right: 'blue'});
+}
+8.
+function updateColorMap(colormap) {
+  return {...colormap, right: 'blue'};
+}
 
+9.Immutable.js is another way to solve this problem. It provides immutable, persistent collections that work via structural sharing:

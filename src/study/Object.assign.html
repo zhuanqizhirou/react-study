@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CounterButton</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        class CounterButton extends React.PureComponent {
+            constructor(props) {
+                super(props);
+                this.state = {colormap:{
+                    right:"blue"
+                }};
+            }
+
+            render() {
+                return (
+                        <div>
+                            <button
+                                    color={this.props.color}
+                                    onClick={
+                                        () => {
+                                            this.setState(state => ({colormap: }))
+                                        }
+                                    }>
+                                Count: {this.state.count}
+                            </button>
+                        </div>
+                );
+            }
+        }
+
+        const e =
+                <CounterButton />
+        ;
+        ReactDOM.render(e, document.getElementById("root"));
+
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

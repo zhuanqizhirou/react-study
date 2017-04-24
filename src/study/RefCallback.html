@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ref</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        class CustomTextInput extends React.Component {
+            constructor(props) {
+                super(props);
+                this.focus = this.focus.bind(this);
+            }
+
+            focus() {
+                // Explicitly focus the text input using the raw DOM API
+                this.textInput.focus();
+            }
+
+            render() {
+                // Use the `ref` callback to store a reference to the text input DOM
+                // element in an instance field (for example, this.textInput).
+                return (
+                        <div>
+                            <input
+                                    type="text"
+                                    ref={(input) => { this.textInput = input; }} />
+                            <input
+                                    type="button"
+                                    value="Focus the text input"
+                                    onClick={this.focus}
+                            />
+                        </div>
+                );
+            }
+        }
+
+        const e = <CustomTextInput />;
+        ReactDOM.render(e, document.getElementById("root"));
+
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>
