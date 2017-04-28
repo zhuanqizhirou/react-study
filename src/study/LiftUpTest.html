@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+
+        function Listen(props){
+            if(props.num>=100){
+                return "<div>>=100</div>"
+            }else{
+                return "<div><100</div>"
+            }
+        }
+        class NumInput extends React.Component{
+            constructor(props){
+                super(props);
+
+            }
+            handleInput(e){
+                this.props.onNumChange(e.target.value);
+            }
+
+            render(){
+                return(
+                    <div>
+                        请输入{this.props.sys}进数:
+                        <input type="text" onChange={this.handleInput.bind(this)}/>
+                    </div>
+                )
+            }
+        }
+        function handleD(num){
+            num=Number(num)//必须
+            let h=num.toString(16);
+            console.log("handleD:num is "+num+",h:"+h);
+            return h;
+        }
+        function handleH(num){
+            let d = parseInt(num,16)
+            console.log("handleH,num is "+num+",d:"+d)
+            return d;
+        }
+        class Container extends React.Component {
+            constructor(props){
+                super(props);
+                this.state = {num:"0",sys:"d"};
+            }
+
+//            If you don't use something in render(), it shouldn't be in the state.
+
+            handleD(num){
+                this.setState({
+                    num:num,
+                    sys:"d"
+                })
+            }
+            handleH(num){
+                this.setState({
+                    num:num,
+                    sys:'h'
+                })
+            }
+            render() {
+                const sys=this.state.sys;
+                const num = this.state.num;
+
+                console.log(sys+":"+num)
+                const d= sys=="d"?num:handleH(num);
+                const h = sys=="h"?num:handleD(num);
+                console.log(d)
+                console.log(h)
+
+//                console.log(this.state.sys+":"+this.state.num)
+//                const d= this.state.sys=="d"?this.state.num:handleH(this.state.num);
+//                const h = this.state.sys=="h"?this.state.num:handleD(this.state.num);
+//                console.log(d)
+//                console.log(h)
+                return (
+                        <div>
+                            这是错误版本:
+                            <div>
+                                1.num.toString(16),num必须先转化:num=Number(num)
+                                2.输入框的值底层转换了,但是没有render出来,应该把props中的值传递给NumInput的render()方法中,显示出来.
+
+                            </div>
+                            <NumInput sys="d" value={d} onNumChange={this.handleD.bind(this)}/>
+                            <NumInput sys="h" value={h} onNumChange={this.handleH.bind(this)}/>
+                        </div>
+                )
+            }
+
+        }
+        ReactDOM.render(
+                <Container />,
+            document.getElementById('root')
+        )
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>

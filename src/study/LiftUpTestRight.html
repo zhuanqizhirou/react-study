@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../react.min.js"></script>
+    <script src="../../react-dom.min.js"></script>
+    <script src="../../browser.min.js"></script>
+    <script type="text/babel">
+        function Handle(props) {
+            if (props.num >= 100) {
+                return <div> >=100 </div>;
+            } else {
+                return <div> 小于100 </div>;
+            }
+        }
+        class NumInput extends React.Component {
+            constructor(props) {
+                super(props);
+
+            }
+
+            handle(e) {
+                this.props.onNumChange(e.target.value);
+            }
+
+            render() {
+                return (
+                        <div>
+                            <div>请输入{this.props.sys}进制数</div>
+                            <input type="text" value={this.props.num} onChange={this.handle.bind(this)}/>
+                        </div>
+                )
+            }
+        }
+        function handleD(n) {
+            n = Number(n);
+            return n.toString(16)
+        }
+        function handleH(n) {
+            return parseInt(n, 16)
+        }
+        class Container extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {sys: "d", num: 0};
+            }
+
+//            If you don't use something in render(), it shouldn't be in the state.
+            handleD(n) {
+                this.setState({
+                    sys: "d",
+                    num: n
+                })
+            }
+
+            handleH(n) {
+                this.setState({
+                    sys: "h",
+                    num: n
+                })
+            }
+
+            render() {
+                const sys = this.state.sys;
+                const num = this.state.num;
+
+                const d = sys == "d" ? num : handleH(num);
+                const h = sys == "h" ? num : handleD(num);
+                return (
+                        <div>
+                            <NumInput sys="d" num={d} onNumChange={this.handleD.bind(this)}/>
+                            <NumInput sys="h" num={h} onNumChange={this.handleH.bind(this)}/>
+                            <Handle num={h}/>
+                        </div>
+                )
+            }
+
+            componentDidMount() {
+                this.timerId = setInterval(
+                    () => this.tick(),
+                    1000
+                )
+            }
+
+            componentWillUnmount() {
+                clearInterval(this.timerID);
+            }
+
+            tick() {
+                this.setState({
+                    date: new Date()
+                })
+            }
+        }
+        ReactDOM.render(
+                <Container />,
+            document.getElementById('root')
+        )
+    </script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>
